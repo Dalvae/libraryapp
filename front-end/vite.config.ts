@@ -9,7 +9,10 @@ export default defineConfig({
   base: './',
   plugins: [react(), viteTsconfigPaths()],
   server: {
-    port: 3000,
+    // watch: {
+    //   usePolling: true,
+    // },
+    port: 5173,
   },
   test: {
     globals: true,
