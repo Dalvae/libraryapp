@@ -95,11 +95,12 @@ app.get("/auth/me", async (req, res) => {
     const user = await pool.query("SELECT * FROM users WHERE id = $1", [
       userId,
     ]);
+
     if (user.rows.length === 0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    res.json({ user: user.rows[0] });
+    res.json({ data: { user: user.rows[0] } });
   } catch (error) {
     console.error("Error al obtener los datos del usuario:", error);
     res.status(500).json({ message: "Error al obtener los datos del usuario" });
@@ -159,7 +160,7 @@ const createUsersTable = async () => {
           firstName VARCHAR(255) NOT NULL,
           lastName VARCHAR(255) NOT NULL,
           password VARCHAR(255) NOT NULL,
-          role VARCHAR(20) NOT NULL DEFAULT 'user'
+          role VARCHAR(20) NOT NULL DEFAULT 'user',
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
       `);
@@ -172,7 +173,19 @@ const createUsersTable = async () => {
   }
 };
 
-createUsersTable();
+createUsersTable()
+  .then(() => createAdminUser())
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(
+        `Servidor de autenticación en ejecución en el puerto ${process.env.PORT}`
+      );
+    });
+  })
+  .catch((error) => {
+    console.error("Error al inicializar el servidor:", error);
+  });
+
 const createAdminUser = async () => {
   try {
     const adminEmail = process.env.ADMIN_EMAIL;
@@ -198,9 +211,3 @@ const createAdminUser = async () => {
   }
 };
 createAdminUser();
-// Inicia el servidor
-app.listen(process.env.PORT, () => {
-  console.log(
-    `Servidor de autenticación en ejecución en el puerto ${process.env.PORT}`
-  );
-});
