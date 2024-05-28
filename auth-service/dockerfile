@@ -7,6 +7,9 @@ WORKDIR /app
 # Install pnpm globally
 RUN npm install -g pnpm
 
+# Install PostgreSQL client tools
+RUN apk --no-cache add postgresql-client
+
 # Copy package files and install dependencies
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
@@ -14,8 +17,14 @@ RUN pnpm install --frozen-lockfile
 # Copy the rest of the application code
 COPY . .
 
+# Copy the wait-for-postgres.sh script to the container
+COPY wait-for-postgres.sh /app/wait-for-postgres.sh
+
+# Grant execution permissions to the script
+RUN chmod +x /app/wait-for-postgres.sh
+
 # Expose the port defined by the environment variable
 EXPOSE ${AUTH_SERVICE_PORT}
 
-# Start the application using pnpm
-CMD ["pnpm", "start"]
+# Run the wait-for-postgres.sh script before starting the application
+CMD ["sh", "-c", "/app/wait-for-postgres.sh && pnpm start"]
