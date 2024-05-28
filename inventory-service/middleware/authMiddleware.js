@@ -21,7 +21,7 @@ exports.authenticateUser = (req, res, next) => {
 };
 
 exports.authorizeAdmin = (req, res, next) => {
-  if (req.userRole !== "admin") {
+  if (req.user.role !== "admin") {
     return res
       .status(403)
       .json({ message: "No tienes permiso para realizar esta acción" });
