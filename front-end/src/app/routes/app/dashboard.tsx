@@ -7,12 +7,12 @@ export const DashboardRoute = () => {
   return (
     <ContentLayout title="Dashboard">
       <h1 className="text-xl">
-        Welcome <b>{`${user.data?.firstName} ${user.data?.lastName}`}</b>
+        Bienvenido <b>{`${user.data?.firstName} ${user.data?.lastName}`}</b>
       </h1>
       <h4 className="my-3">
-        Your role is : <b>{user.data?.role}</b>
+        Tu rol es : <b>{user.data?.role}</b>
       </h4>
-      <p className="font-medium">En esta aplicacion:</p>
+      <p className="font-medium">En esta aplicacion puedes:</p>
       {user.data?.role === ROLES.user && (
         <ul className="my-4 list-inside list-disc">
           <li>Crear Libros</li>

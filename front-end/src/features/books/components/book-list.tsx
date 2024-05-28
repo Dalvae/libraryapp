@@ -3,6 +3,7 @@ import { Table } from '@/components/ui/table';
 import { formatDate } from '@/utils/format';
 import { DeleteBook } from './delete-book';
 import { useBooks } from '../api/get-books';
+import { AddBook } from './addBook';
 
 export const BooksList = () => {
   const booksQuery = useBooks();
@@ -18,49 +19,52 @@ export const BooksList = () => {
   if (!booksQuery.data) return null;
 
   return (
-    <Table
-      data={booksQuery.data}
-      columns={[
-        {
-          title: 'Título',
-          field: 'title',
-        },
-        {
-          title: 'Autor',
-          field: 'author',
-        },
-        {
-          title: 'Genero',
-          field: 'genre',
-        },
-        {
-          title: 'Precio',
-          field: 'price',
-          Cell({ entry: { price } }) {
-            const formattedPrice =
-              typeof price === 'number' ? price.toFixed(2) : price;
-            return <span>${formattedPrice}</span>;
+    <>
+      <AddBook />
+      <Table
+        data={booksQuery.data}
+        columns={[
+          {
+            title: 'Título',
+            field: 'title',
           },
-        },
-        {
-          title: 'Stock',
-          field: 'stock',
-        },
-        {
-          title: 'Creado',
-          field: 'createdAt',
-          Cell({ entry: { createdAt } }) {
-            return <span>{formatDate(createdAt)}</span>;
+          {
+            title: 'Autor',
+            field: 'author',
           },
-        },
-        {
-          title: '',
-          field: 'id',
-          Cell({ entry: { id } }) {
-            return <DeleteBook id={id} />;
+          {
+            title: 'Genero',
+            field: 'genre',
           },
-        },
-      ]}
-    />
+          {
+            title: 'Precio',
+            field: 'price',
+            Cell({ entry: { price } }) {
+              const formattedPrice =
+                typeof price === 'number' ? price.toFixed(2) : price;
+              return <span>${formattedPrice}</span>;
+            },
+          },
+          {
+            title: 'Stock',
+            field: 'stock',
+          },
+          {
+            title: 'Creado',
+            field: 'createdAt',
+            Cell({ entry: { createdAt } }) {
+              return <span>{formatDate(createdAt)}</span>;
+            },
+          },
+          {
+            title: '',
+            field: 'id',
+            Cell({ entry: { id } }) {
+              return <DeleteBook id={id} />;
+            },
+          },
+        ]}
+      />
+    </>
   );
 };

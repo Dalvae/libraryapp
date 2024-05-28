@@ -34,8 +34,18 @@ const createBook = async (req, res) => {
   try {
     const { rows } = await req.pool.query(
       'INSERT INTO books (title, author, genre, price, stock, "createdBy", "createdAt", image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-      [title, author, genre, price, stock, createdBy, createdAt, image]
+      [
+        title,
+        author,
+        genre,
+        parseFloat(price),
+        parseInt(stock),
+        createdBy,
+        createdAt,
+        image,
+      ]
     );
+
     res.status(201).json(rows[0]);
   } catch (error) {
     console.error("Error al crear el libro:", error);
