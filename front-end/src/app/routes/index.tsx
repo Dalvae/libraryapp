@@ -6,6 +6,7 @@ import { ProtectedRoute } from '@/lib/auth';
 
 import { AppRoot } from './app/root';
 import { usersLoader } from './app/users';
+import { booksLoader } from './app/books';
 
 export const createRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
@@ -45,6 +46,14 @@ export const createRouter = (queryClient: QueryClient) =>
             return { Component: UsersRoute };
           },
           loader: usersLoader(queryClient),
+        },
+        {
+          path: 'books',
+          lazy: async () => {
+            const { BooksRoute } = await import('./app/books');
+            return { Component: BooksRoute };
+          },
+          loader: booksLoader(queryClient),
         },
         {
           path: 'profile',

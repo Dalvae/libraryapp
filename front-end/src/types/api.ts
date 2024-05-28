@@ -19,6 +19,16 @@ export type User = Entity<{
   bio: string;
 }>;
 
+export type Book = Entity<{
+  title: string;
+  author: string;
+  genre: string;
+  price: number;
+  stock: number;
+  createdBy: string;
+  image?: string;
+}>;
+
 export type AuthResponse = {
   token: string;
   user: User;
