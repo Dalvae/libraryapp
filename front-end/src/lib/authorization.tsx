@@ -5,19 +5,19 @@ import { Comment, User } from '@/types/api';
 import { useUser } from './auth';
 
 export enum ROLES {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
+  admin = 'admin',
+  user = 'user',
 }
 
 type RoleTypes = keyof typeof ROLES;
 
 export const POLICIES = {
   'comment:delete': (user: User, comment: Comment) => {
-    if (user.role === 'ADMIN') {
+    if (user.role === 'admin') {
       return true;
     }
 
-    if (user.role === 'USER' && comment.author?.id === user.id) {
+    if (user.role === 'user' && comment.author?.id === user.id) {
       return true;
     }
 

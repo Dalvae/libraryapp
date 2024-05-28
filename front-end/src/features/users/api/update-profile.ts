@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { api } from '@/lib/api-client';
+import { authApi } from '@/lib/api-client';
 import { useUser } from '@/lib/auth';
 import { MutationConfig } from '@/lib/react-query';
 
@@ -15,7 +15,7 @@ export const updateProfileInputSchema = z.object({
 export type UpdateProfileInput = z.infer<typeof updateProfileInputSchema>;
 
 export const updateProfile = ({ data }: { data: UpdateProfileInput }) => {
-  return api.patch(`/users/profile`, data);
+  return authApi.patch(`/users/profile`, data);
 };
 
 type UseUpdateProfileOptions = {

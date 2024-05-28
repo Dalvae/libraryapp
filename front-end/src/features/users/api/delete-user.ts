@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { api } from '@/lib/api-client';
+import { authApi } from '@/lib/api-client';
 import { MutationConfig } from '@/lib/react-query';
 
 import { getUsersQueryOptions } from './get-users';
@@ -10,7 +10,7 @@ export type DeleteUserDTO = {
 };
 
 export const deleteUser = ({ userId }: DeleteUserDTO) => {
-  return api.delete(`/users/${userId}`);
+  return authApi.delete(`/users/${userId}`);
 };
 
 type UseDeleteUserOptions = {

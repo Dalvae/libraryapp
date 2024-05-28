@@ -2,7 +2,8 @@ import * as z from 'zod';
 
 const createEnv = () => {
   const EnvSchema = z.object({
-    API_URL: z.string(),
+    AUTH_SERVICE_URL: z.string().url(),
+    INVENTORY_SERVICE_URL: z.string().url(),
     ENABLE_API_MOCKING: z
       .string()
       .refine((s) => s === 'true' || s === 'false')
@@ -12,13 +13,15 @@ const createEnv = () => {
 
   const envVars = Object.entries(import.meta.env).reduce<
     Record<string, string>
-  >((acc, curr) => {
-    const [key, value] = curr;
-    if (key.startsWith('VITE_APP_')) {
-      acc[key.replace('VITE_APP_', '')] = value;
+  >((acc, [key, value]) => {
+    if (key.startsWith('VITE_')) {
+      acc[key.replace('VITE_', '')] = value;
     }
     return acc;
   }, {});
+
+  // Log the environment variables before validation
+  console.log('Environment Variables:', envVars);
 
   const parsedEnv = EnvSchema.safeParse(envVars);
 

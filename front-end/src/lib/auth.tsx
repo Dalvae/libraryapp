@@ -4,17 +4,32 @@ import { z } from 'zod';
 
 import { AuthResponse, User } from '@/types/api';
 
-import { api } from './api-client';
+import { authApi } from './api-client';
 
 // api call definitions for auth (types, schemas, requests):
 // these are not part of features as this is a module shared across features
 
-const getUser = (): Promise<User> => {
-  return api.get('/auth/me');
+const getUser = async (): Promise<User | null> => {
+  const jwt = localStorage.getItem('jwt');
+  if (jwt) {
+    try {
+      const response = await authApi.get<{ user: User }>('/auth/me');
+      if (response.data.user) {
+        return response.data.user;
+      } else {
+        console.error('Unexpected response format:', response.data);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return null;
+    }
+  }
+  return null;
 };
 
 const logout = (): Promise<void> => {
-  return api.post('/auth/logout');
+  return authApi.post('/auth/logout');
 };
 
 export const loginInputSchema = z.object({
@@ -24,7 +39,7 @@ export const loginInputSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
 const loginWithEmailAndPassword = (data: LoginInput): Promise<AuthResponse> => {
-  return api.post('/auth/login', data);
+  return authApi.post('/auth/login', data);
 };
 
 export const registerInputSchema = z
@@ -53,20 +68,25 @@ export type RegisterInput = z.infer<typeof registerInputSchema>;
 const registerWithEmailAndPassword = (
   data: RegisterInput,
 ): Promise<AuthResponse> => {
-  return api.post('/auth/register', data);
+  return authApi.post('/auth/register', data);
 };
 
 const authConfig = {
   userFn: getUser,
   loginFn: async (data: LoginInput) => {
     const response = await loginWithEmailAndPassword(data);
+    localStorage.setItem('jwt', response.token);
     return response.user;
   },
   registerFn: async (data: RegisterInput) => {
     const response = await registerWithEmailAndPassword(data);
+    localStorage.setItem('jwt', response.token);
     return response.user;
   },
-  logoutFn: logout,
+  logoutFn: () => {
+    localStorage.removeItem('jwt');
+    return logout();
+  },
 };
 
 export const { useUser, useLogin, useLogout, useRegister, AuthLoader } =

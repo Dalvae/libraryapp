@@ -12,16 +12,15 @@ export type Entity<T> = {
 } & BaseEntity;
 
 export type User = Entity<{
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  role: 'ADMIN' | 'USER';
-  teamId: string;
+  role: 'admin' | 'user';
   bio: string;
 }>;
 
 export type AuthResponse = {
-  jwt: string;
+  token: string;
   user: User;
 };
 

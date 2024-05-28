@@ -82,7 +82,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const navigation = [
     { name: 'Dashboard', to: '.', icon: Home },
     { name: 'Discussions', to: './discussions', icon: Folder },
-    checkAccess({ allowedRoles: [ROLES.ADMIN] }) && {
+    checkAccess({ allowedRoles: [ROLES.admin] }) && {
       name: 'Users',
       to: './users',
       icon: Users,

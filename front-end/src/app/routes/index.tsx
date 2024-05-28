@@ -1,10 +1,9 @@
+//app/routes/index.tsx
 import { QueryClient } from '@tanstack/react-query';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { ProtectedRoute } from '@/lib/auth';
 
-import { discussionLoader } from './app/discussions/discussion';
-import { discussionsLoader } from './app/discussions/discussions';
 import { AppRoot } from './app/root';
 import { usersLoader } from './app/users';
 
@@ -39,26 +38,6 @@ export const createRouter = (queryClient: QueryClient) =>
         </ProtectedRoute>
       ),
       children: [
-        {
-          path: 'discussions',
-          lazy: async () => {
-            const { DiscussionsRoute } = await import(
-              './app/discussions/discussions'
-            );
-            return { Component: DiscussionsRoute };
-          },
-          loader: discussionsLoader(queryClient),
-        },
-        {
-          path: 'discussions/:discussionId',
-          lazy: async () => {
-            const { DiscussionRoute } = await import(
-              './app/discussions/discussion'
-            );
-            return { Component: DiscussionRoute };
-          },
-          loader: discussionLoader(queryClient),
-        },
         {
           path: 'users',
           lazy: async () => {
