@@ -9,10 +9,20 @@ export default defineConfig({
   base: './',
   plugins: [react(), viteTsconfigPaths()],
   server: {
-    // watch: {
-    //   usePolling: true,
-    // },
+    host: true,
     port: 5173,
+    proxy: {
+      '/apiauth': {
+        target: process.env.AUTH_SERVICE_URL,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/apiauth/, ''),
+      },
+      '/apiinventory': {
+        target: process.env.INVENTORY_SERVICE_URL,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/apiinventory/, ''),
+      },
+    },
   },
   test: {
     globals: true,

@@ -10,7 +10,7 @@ services:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+    command: -p ${POSTGRES_PORT}
   auth-service:
     build: ./auth-service
     ports:
@@ -62,8 +62,11 @@ services:
       - /app/node_modules
     environment:
       - FRONTEND_PORT=${FRONTEND_PORT}
-      - VITE_AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
+      - VITE_AUTH_SERVICE_PORT={AUTH_SERVICE_PORT}
       - VITE_INVENTORY_SERVICE_PORT=${INVENTORY_SERVICE_PORT}
+      - AUTH_SERVICE_URL=http://auth-service:${AUTH_SERVICE_PORT}
+      - INVENTORY_SERVICE_URL=http://inventory-service:${INVENTORY_SERVICE_PORT}
+      - ENABLE_API_MOCKING=${ENABLE_API_MOCKING}
 
 volumes:
   postgres_data:
