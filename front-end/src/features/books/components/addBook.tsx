@@ -40,6 +40,7 @@ export const AddBook = () => {
       <Button
         onClick={() => setOpen(true)}
         icon={<BookPlus className="w-4 h-4" />}
+        className=" p-2 mx-4"
       >
         Añadir Libro
       </Button>

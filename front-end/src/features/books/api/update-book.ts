@@ -16,8 +16,23 @@ export const updateBookInputSchema = z.object({
 
 export type UpdateBookInput = z.infer<typeof updateBookInputSchema>;
 
-export const updateBook = ({ data }: { data: UpdateBookInput }) => {
-  return inventoryApi.patch(`/books/${data.id}`, data);
+export const updateBook = ({
+  id,
+  title,
+  author,
+  genre,
+  price,
+  stock,
+  image,
+}: UpdateBookInput) => {
+  return inventoryApi.put(`/books/${id}`, {
+    title,
+    author,
+    genre,
+    price,
+    stock,
+    image,
+  });
 };
 
 type UseUpdateBookOptions = {

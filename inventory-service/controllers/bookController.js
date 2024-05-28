@@ -28,7 +28,7 @@ const getBookById = async (req, res) => {
 
 const createBook = async (req, res) => {
   const { title, author, genre, price, stock, image } = req.body;
-  const createdBy = req.user.id; // assuming the user's ID is stored in the token
+  const createdBy = req.user.id;
   const createdAt = new Date();
 
   try {

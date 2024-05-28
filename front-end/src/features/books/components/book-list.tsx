@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 import { Table } from '@/components/ui/table';
 import { formatDate } from '@/utils/format';
 import { DeleteBook } from './delete-book';
 import { useBooks } from '../api/get-books';
 import { AddBook } from './addBook';
+import { UpdateStock } from './update-stock';
+import { SearchBooks } from './search-book';
 
 export const BooksList = () => {
   const booksQuery = useBooks();
+  const [searchQuery, setSearchQuery] = useState('');
 
   if (booksQuery.isLoading) {
     return (
@@ -18,11 +22,22 @@ export const BooksList = () => {
 
   if (!booksQuery.data) return null;
 
+  // Filtrar y ordenar los libros
+  const filteredBooks = booksQuery.data
+    .filter((book) =>
+      [book.title, book.author, book.genre].some((field) =>
+        field.toLowerCase().includes(searchQuery.toLowerCase()),
+      ),
+    )
+    .sort((a, b) => parseInt(a.id) - parseInt(b.id));
   return (
     <>
-      <AddBook />
+      <div className="flex flex-row w-full align-baseline items-center mb-4  ">
+        <SearchBooks onSearch={setSearchQuery} />
+        <AddBook />
+      </div>
       <Table
-        data={booksQuery.data}
+        data={filteredBooks}
         columns={[
           {
             title: 'Título',
@@ -33,7 +48,7 @@ export const BooksList = () => {
             field: 'author',
           },
           {
-            title: 'Genero',
+            title: 'Género',
             field: 'genre',
           },
           {
@@ -48,6 +63,9 @@ export const BooksList = () => {
           {
             title: 'Stock',
             field: 'stock',
+            Cell({ entry }) {
+              return <UpdateStock book={entry} />;
+            },
           },
           {
             title: 'Creado',
