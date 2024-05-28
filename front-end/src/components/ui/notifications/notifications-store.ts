@@ -16,13 +16,20 @@ type NotificationsStore = {
 
 export const useNotifications = create<NotificationsStore>((set) => ({
   notifications: [],
-  addNotification: (notification) =>
+  addNotification: (notification) => {
+    const id = nanoid();
     set((state) => ({
-      notifications: [
-        ...state.notifications,
-        { id: nanoid(), ...notification },
-      ],
-    })),
+      notifications: [{ id, ...notification }, ...state.notifications],
+    }));
+
+    setTimeout(
+      () =>
+        set((state) => ({
+          notifications: state.notifications.filter((n) => n.id !== id),
+        })),
+      10000,
+    );
+  },
   dismissNotification: (id) =>
     set((state) => ({
       notifications: state.notifications.filter(
