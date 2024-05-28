@@ -12,20 +12,20 @@ export const DashboardRoute = () => {
       <h4 className="my-3">
         Your role is : <b>{user.data?.role}</b>
       </h4>
-      <p className="font-medium">In this application you can:</p>
+      <p className="font-medium">En esta aplicacion:</p>
       {user.data?.role === ROLES.user && (
         <ul className="my-4 list-inside list-disc">
-          <li>Create comments in discussions</li>
-          <li>Delete own comments</li>
+          <li>Crear Libros</li>
+          <li>Editar tus propios items</li>
         </ul>
       )}
       {user.data?.role === ROLES.admin && (
         <ul className="my-4 list-inside list-disc">
-          <li>Create discussions</li>
-          <li>Edit discussions</li>
-          <li>Delete discussions</li>
-          <li>Comment on discussions</li>
-          <li>Delete all comments</li>
+          <li>Crear Libros</li>
+          <li>Editar tus propios items</li>
+          <li>Borrar usuarios</li>
+          <li>Editar todos los items</li>
+          <li>Borrar items</li>
         </ul>
       )}
     </ContentLayout>

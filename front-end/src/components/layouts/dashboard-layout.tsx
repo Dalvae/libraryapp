@@ -1,8 +1,8 @@
-import { Home, PanelLeft, Folder, Users, User2 } from 'lucide-react';
+import { Home, PanelLeft, Book, Users, User2 } from 'lucide-react';
+
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
-
-import logo from '@/assets/logo.svg';
+import { BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { useLogout } from '@/lib/auth';
@@ -27,10 +27,8 @@ type SideNavigationItem = {
 const Logo = () => {
   return (
     <Link className="flex items-center text-white" to="/">
-      <img className="h-8 w-auto" src={logo} alt="Workflow" />
-      <span className="text-sm font-semibold text-white">
-        Bulletproof React
-      </span>
+      <BookOpen className="h-8 w-auto mr-2" />
+      <span className="text-sm font-semibold text-white">Library App</span>
     </Link>
   );
 };
@@ -81,7 +79,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const navigation = [
     { name: 'Dashboard', to: '.', icon: Home },
-    { name: 'Discussions', to: './discussions', icon: Folder },
+    { name: 'Libros', to: './libros', icon: Book },
     checkAccess({ allowedRoles: [ROLES.admin] }) && {
       name: 'Users',
       to: './users',

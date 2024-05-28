@@ -60,16 +60,6 @@ module.exports = {
                 except: ['./comments'],
               },
               {
-                target: './src/features/discussions',
-                from: './src/features',
-                except: ['./discussions'],
-              },
-              {
-                target: './src/features/teams',
-                from: './src/features',
-                except: ['./teams'],
-              },
-              {
                 target: './src/features/users',
                 from: './src/features',
                 except: ['./users'],
