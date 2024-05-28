@@ -26,7 +26,7 @@ export const DeleteBook = ({ id }: DeleteBookProps) => {
       icon="danger"
       title="Borrar Libro"
       body="¿Estas seguro que quieres borrar este libro?"
-      triggerButton={<Button variant="destructive">Delete</Button>}
+      triggerButton={<Button variant="destructive">Borrar</Button>}
       confirmButton={
         <Button
           isLoading={deleteBookMutation.isPending}
@@ -34,7 +34,7 @@ export const DeleteBook = ({ id }: DeleteBookProps) => {
           variant="destructive"
           onClick={() => deleteBookMutation.mutate({ bookId: id })}
         >
-          Delete Book
+          Borrar Libro
         </Button>
       }
     />

@@ -24,11 +24,11 @@ export const UsersList = () => {
       data={usersQuery.data}
       columns={[
         {
-          title: 'First Name',
+          title: 'Nombre',
           field: 'firstName',
         },
         {
-          title: 'Last Name',
+          title: 'Apellido',
           field: 'lastName',
         },
         {
@@ -36,11 +36,11 @@ export const UsersList = () => {
           field: 'email',
         },
         {
-          title: 'Role',
+          title: 'Rol',
           field: 'role',
         },
         {
-          title: 'Created At',
+          title: 'Fecha Creación',
           field: 'createdAt',
           Cell({ entry: { createdAt } }) {
             return <span>{formatDate(createdAt)}</span>;
