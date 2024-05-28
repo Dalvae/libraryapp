@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ConfirmationDialog } from '@/components/ui/dialog';
 import { useNotifications } from '@/components/ui/notifications';
-import { useUser } from '@/lib/auth';
 import { useDeleteBook } from '../api/delete-book';
 
 type DeleteBookProps = {
@@ -9,7 +8,6 @@ type DeleteBookProps = {
 };
 
 export const DeleteBook = ({ id }: DeleteBookProps) => {
-  const user = useUser();
   const { addNotification } = useNotifications();
 
   const deleteBookMutation = useDeleteBook({
@@ -22,8 +20,6 @@ export const DeleteBook = ({ id }: DeleteBookProps) => {
       },
     },
   });
-
-  if (user.data?.id === id) return null;
 
   return (
     <ConfirmationDialog
