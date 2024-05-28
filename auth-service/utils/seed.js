@@ -18,8 +18,8 @@ const createUsersTable = async () => {
         CREATE TABLE users (
           id SERIAL PRIMARY KEY,
           email VARCHAR(255) UNIQUE NOT NULL,
-          firstName VARCHAR(255) NOT NULL,
-          lastName VARCHAR(255) NOT NULL,
+          "firstName" VARCHAR(255) NOT NULL,
+          "lastName" VARCHAR(255) NOT NULL,
           password VARCHAR(255) NOT NULL,
           role VARCHAR(20) NOT NULL DEFAULT 'user',
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -47,7 +47,7 @@ const createAdminUser = async () => {
     if (existingAdmin.rows.length === 0) {
       const hashedPassword = await bcrypt.hash(adminPassword, 10);
       await pool.query(
-        "INSERT INTO users (email, firstName, lastName, password, role) VALUES ($1, $2, $3, $4, 'admin')",
+        'INSERT INTO users (email, "firstName", "lastName", password, role) VALUES ($1, $2, $3, $4, \'admin\')',
         [adminEmail, "System", "Admin", hashedPassword]
       );
       console.log("Usuario administrador creado exitosamente");

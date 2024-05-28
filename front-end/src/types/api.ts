@@ -12,8 +12,8 @@ export type Entity<T> = {
 } & BaseEntity;
 
 export type User = Entity<{
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   role: 'admin' | 'user';
   bio: string;
