@@ -60,13 +60,29 @@ const updateBook = async (req, res) => {
   const lastEdited = new Date();
 
   try {
+    const updateFields = {};
+    if (title !== undefined) updateFields.title = title;
+    if (author !== undefined) updateFields.author = author;
+    if (genre !== undefined) updateFields.genre = genre;
+    if (price !== undefined) updateFields.price = price;
+    if (stock !== undefined) updateFields.stock = stock;
+    if (image !== undefined) updateFields.image = image;
+    if (description !== undefined) updateFields.description = description;
+    updateFields.lastEdited = lastEdited;
+
     const { rows } = await req.pool.query(
-      'UPDATE books SET title = $1, author = $2, genre = $3, price = $4, stock = $5, image = $6, description = $7, "lastEdited" = $8 WHERE id = $9 RETURNING *',
-      [title, author, genre, price, stock, image, description, lastEdited, id]
+      `UPDATE books SET ${Object.keys(updateFields)
+        .map((key, index) => `"${key}" = $${index + 1}`)
+        .join(", ")} WHERE id = $${
+        Object.keys(updateFields).length + 1
+      } RETURNING *`,
+      [...Object.values(updateFields), id]
     );
+
     if (rows.length === 0) {
       return res.status(404).json({ message: "Libro no encontrado" });
     }
+
     res.json(rows[0]);
   } catch (error) {
     console.error("Error al actualizar el libro:", error);

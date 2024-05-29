@@ -10,6 +10,7 @@ import { SearchBooks } from './search-book';
 import { SortBooks } from './sortBooks';
 import { ChangeView } from './changeView';
 import { BookCard } from './bookCard';
+import { UpdateBook } from './updateBook';
 
 export const BooksList = () => {
   const booksQuery = useBooks();
@@ -88,6 +89,13 @@ export const BooksList = () => {
               field: 'createdAt',
               Cell({ entry: { createdAt } }) {
                 return <span>{formatDate(createdAt)}</span>;
+              },
+            },
+            {
+              title: '',
+              field: 'id',
+              Cell({ entry: book }) {
+                return <UpdateBook book={book} />;
               },
             },
             {

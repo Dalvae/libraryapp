@@ -28,7 +28,7 @@ export type Book = Entity<{
   createdBy: string;
   image?: string;
   lastEdited: string;
-  description?: string;
+  description?: string | null; // Cambio aquí
 }>;
 
 export type AuthResponse = {

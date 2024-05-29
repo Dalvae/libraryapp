@@ -22,7 +22,7 @@ export const SortBooks: FC<SortBooksProps> = ({
   };
 
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={300}>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
@@ -36,7 +36,7 @@ export const SortBooks: FC<SortBooksProps> = ({
             )}
           </Button>
         </TooltipTrigger>
-        <TooltipContent className="bg-white text-sm text-gray-700 p-2 rounded shadow">
+        <TooltipContent className="bg-white text-sm text-gray-700 p-2 rounded shadow m-2">
           {sortCriteria === 'id'
             ? 'Ordenar por ID'
             : 'Ordenar por última edición'}

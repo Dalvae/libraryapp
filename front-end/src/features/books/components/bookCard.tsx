@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/modal/modal';
 import { Book } from '@/types/api';
 import { Button } from '@/components/ui/button';
+import { UpdateBook } from './updateBook';
 
 type BookCardProps = {
   book: Book;
@@ -42,9 +43,12 @@ export const BookCard: FC<BookCardProps> = ({ book }) => {
                 className="w-48 h-72 object-cover rounded-md"
               />
             </div>
-            <ModalTitle className="text-center mt-4">
-              {book.title} - {book.author}
-            </ModalTitle>
+            <div className="flex justify-between items-center mt-4">
+              <ModalTitle>
+                {book.title} - {book.author}
+              </ModalTitle>
+              <span className="text-sm text-gray-500">{book.genre}</span>
+            </div>
           </ModalHeader>
           <ModalBody>
             <div className="max-h-60 overflow-y-auto">
@@ -52,8 +56,21 @@ export const BookCard: FC<BookCardProps> = ({ book }) => {
             </div>
           </ModalBody>
           <ModalFooter>
-            <div className="flex justify-end">
-              <Button onClick={() => setOpen(false)}>Cerrar</Button>
+            <div className="flex justify-between items-center w-full">
+              <div>
+                <p className="text-lg font-bold">Precio: ${book.price}</p>
+                <p className="text-sm text-gray-500">Stock: {book.stock}</p>
+              </div>
+              <div className=" flex items-center align-baseline gap-4">
+                <UpdateBook book={book} />
+                <Button
+                  size="sm"
+                  className="p-0"
+                  onClick={() => setOpen(false)}
+                >
+                  Cerrar
+                </Button>
+              </div>
             </div>
           </ModalFooter>
         </ModalContent>

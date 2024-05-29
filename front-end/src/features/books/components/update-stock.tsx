@@ -2,34 +2,27 @@
 
 import { Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useUpdateBook } from '../api/update-book';
+import { UpdateBookStockInput, useUpdateBookStock } from '../api/update-book';
+import { Book } from '@/types/api';
 
 type UpdateStockProps = {
-  book: {
-    id: string;
-    title: string;
-    author: string;
-    genre: string;
-    price: number;
-    stock: number;
-    image?: string;
-  };
+  book: Book;
 };
 
 export const UpdateStock = ({ book }: UpdateStockProps) => {
-  const updateBookMutation = useUpdateBook();
+  const updateBookStockMutation = useUpdateBookStock();
 
   const handleIncreaseStock = () => {
-    updateBookMutation.mutate({
-      ...book,
+    updateBookStockMutation.mutate({
+      id: book.id,
       stock: book.stock + 1,
     });
   };
 
   const handleDecreaseStock = () => {
     if (book.stock > 0) {
-      updateBookMutation.mutate({
-        ...book,
+      updateBookStockMutation.mutate({
+        id: book.id,
         stock: book.stock - 1,
       });
     }
