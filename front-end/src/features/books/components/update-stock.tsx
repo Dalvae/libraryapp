@@ -40,13 +40,15 @@ export const UpdateStock = ({ book }: UpdateStockProps) => {
       <Button
         onClick={handleDecreaseStock}
         disabled={book.stock === 0}
-        icon={<Minus className="w-4 h-4" />}
-      />
+        className="p-0"
+      >
+        <Minus className="w-4 h-4" />
+      </Button>
       <span className="mx-2">{book.stock}</span>
-      <Button
-        onClick={handleIncreaseStock}
-        icon={<Plus className="w-4 h-4" />}
-      />
+
+      <Button onClick={handleIncreaseStock} className="p-0">
+        <Plus className="w-4 h-4" />
+      </Button>
     </div>
   );
 };
