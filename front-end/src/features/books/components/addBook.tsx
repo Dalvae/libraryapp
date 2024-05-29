@@ -45,7 +45,7 @@ export const AddBook = () => {
         Añadir Libro
       </Button>
       <Modal open={open} onOpenChange={setOpen}>
-        <ModalContent>
+        <ModalContent className="w-11/12 max-w-2xl">
           <ModalHeader>
             <ModalTitle>Añadir Libro</ModalTitle>
           </ModalHeader>

@@ -18,11 +18,11 @@ export const Modal: FC<PropsWithChildren<Dialog.DialogProps>> = ({
 export const ModalContent = forwardRef<
   React.ElementRef<typeof Dialog.Content>,
   PropsWithChildren<Dialog.DialogContentProps>
->(({ children, ...props }, ref) => (
+>(({ children, className, ...props }, ref) => (
   <Dialog.Content
     ref={ref}
     {...props}
-    className="fixed top-1/2 left-1/2 z-50 w-full max-w-md p-6 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg focus:outline-none"
+    className={`fixed top-1/2 left-1/2 z-50 w-full p-6 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg focus:outline-none ${className}`}
   >
     {children}
   </Dialog.Content>
@@ -37,14 +37,13 @@ export const ModalFooter: FC<PropsWithChildren> = ({ children }) => {
   return <div className="mt-4">{children}</div>;
 };
 
-export const ModalTitle: FC<PropsWithChildren<Dialog.DialogTitleProps>> = ({
-  children,
-  ...props
-}) => {
+export const ModalTitle: FC<
+  PropsWithChildren<Dialog.DialogTitleProps & { className?: string }>
+> = ({ children, className, ...props }) => {
   return (
     <Dialog.Title
       {...props}
-      className="text-lg font-medium leading-6 text-gray-900"
+      className={`text-lg font-medium leading-6 text-gray-900 ${className}`}
     >
       {children}
     </Dialog.Title>

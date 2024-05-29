@@ -9,6 +9,7 @@ import { UpdateStock } from './update-stock';
 import { SearchBooks } from './search-book';
 import { SortBooks } from './sortBooks';
 import { ChangeView } from './changeView';
+import { BookCard } from './bookCard';
 
 export const BooksList = () => {
   const booksQuery = useBooks();
@@ -100,9 +101,9 @@ export const BooksList = () => {
         />
       ) : (
         <div className="grid grid-cols-4 gap-4">
-          {/* {filteredBooks.map((book) => (
-          <BookCard key={book.id} book={book} />
-        ))} */}
+          {filteredBooks.map((book) => (
+            <BookCard key={book.id} book={book} />
+          ))}
         </div>
       )}
     </>
