@@ -107,6 +107,18 @@ export const AddBook = () => {
                     )}
                   </div>
                   <div>
+                    <Label htmlFor="description">Descripción</Label>
+                    <Textarea
+                      id="description"
+                      registration={register('description')}
+                    />
+                    {formState.errors.description && (
+                      <span className="error">
+                        {formState.errors.description.message}
+                      </span>
+                    )}
+                  </div>
+                  <div>
                     <Label htmlFor="image">Imagen</Label>
                     <Input id="image" registration={register('image')} />
                     {formState.errors.image && (

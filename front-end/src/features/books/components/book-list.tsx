@@ -7,10 +7,12 @@ import { useBooks } from '../api/get-books';
 import { AddBook } from './addBook';
 import { UpdateStock } from './update-stock';
 import { SearchBooks } from './search-book';
+import { SortBooks } from './sortBooks';
 
 export const BooksList = () => {
   const booksQuery = useBooks();
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortCriteria, setSortCriteria] = useState<'id' | 'lastEdited'>('id');
 
   if (booksQuery.isLoading) {
     return (
@@ -22,18 +24,27 @@ export const BooksList = () => {
 
   if (!booksQuery.data) return null;
 
-  // Filtrar y ordenar los libros
   const filteredBooks = booksQuery.data
     .filter((book) =>
       [book.title, book.author, book.genre].some((field) =>
         field.toLowerCase().includes(searchQuery.toLowerCase()),
       ),
     )
-    .sort((a, b) => parseInt(a.id) - parseInt(b.id));
+    .sort((a, b) => {
+      if (sortCriteria === 'id') {
+        return parseInt(a.id) - parseInt(b.id);
+      } else {
+        return (
+          new Date(b.lastEdited).getTime() - new Date(a.lastEdited).getTime()
+        );
+      }
+    });
+
   return (
     <>
       <div className="flex flex-row w-full align-baseline items-center mb-4  ">
         <SearchBooks onSearch={setSearchQuery} />
+        <SortBooks onSortChange={setSortCriteria} />
         <AddBook />
       </div>
       <Table

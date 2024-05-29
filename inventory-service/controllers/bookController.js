@@ -27,13 +27,13 @@ const getBookById = async (req, res) => {
 };
 
 const createBook = async (req, res) => {
-  const { title, author, genre, price, stock, image } = req.body;
+  const { title, author, genre, price, stock, image, description } = req.body;
   const createdBy = req.user.id;
   const createdAt = new Date();
 
   try {
     const { rows } = await req.pool.query(
-      'INSERT INTO books (title, author, genre, price, stock, "createdBy", "createdAt", image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      'INSERT INTO books (title, author, genre, price, stock, "createdBy", "createdAt", image, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
       [
         title,
         author,
@@ -43,6 +43,7 @@ const createBook = async (req, res) => {
         createdBy,
         createdAt,
         image,
+        description,
       ]
     );
 
@@ -55,11 +56,13 @@ const createBook = async (req, res) => {
 
 const updateBook = async (req, res) => {
   const { id } = req.params;
-  const { title, author, genre, price, stock, image } = req.body;
+  const { title, author, genre, price, stock, image, description } = req.body;
+  const lastEdited = new Date();
+
   try {
     const { rows } = await req.pool.query(
-      "UPDATE books SET title = $1, author = $2, genre = $3, price = $4, stock = $5, image = $6 WHERE id = $7 RETURNING *",
-      [title, author, genre, price, stock, image, id]
+      'UPDATE books SET title = $1, author = $2, genre = $3, price = $4, stock = $5, image = $6, description = $7, "lastEdited" = $8 WHERE id = $9 RETURNING *',
+      [title, author, genre, price, stock, image, description, lastEdited, id]
     );
     if (rows.length === 0) {
       return res.status(404).json({ message: "Libro no encontrado" });

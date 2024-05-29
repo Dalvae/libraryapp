@@ -27,6 +27,8 @@ export type Book = Entity<{
   stock: number;
   createdBy: string;
   image?: string;
+  lastEdited: string;
+  description?: string;
 }>;
 
 export type AuthResponse = {
