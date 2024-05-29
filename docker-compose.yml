@@ -57,7 +57,6 @@ services:
     volumes:
       - ./inventory-service:/app
       - /app/node_modules
-      - ./wait-for-postgres.sh:/wait-for-postgres.sh:ro 
 
   frontend:
     build: ./front-end
@@ -69,7 +68,6 @@ services:
     volumes:
       - ./front-end:/app
       - /app/node_modules
-      - ./wait-for-postgres.sh:/wait-for-postgres.sh:ro 
     environment:
       - FRONTEND_PORT=${FRONTEND_PORT}
       - VITE_AUTH_SERVICE_PORT={AUTH_SERVICE_PORT}
