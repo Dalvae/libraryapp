@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import { Table } from '@/components/ui/table';
 import { formatDate } from '@/utils/format';
@@ -11,12 +12,15 @@ import { SortBooks } from './sortBooks';
 import { ChangeView } from './changeView';
 import { BookCard } from './bookCard';
 import { UpdateBook } from './updateBook';
+import { Pagination } from './pagination';
 
 export const BooksList = () => {
   const booksQuery = useBooks();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortCriteria, setSortCriteria] = useState<'id' | 'lastEdited'>('id');
   const [view, setView] = useState<'table' | 'cards'>('table');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   if (booksQuery.isLoading) {
     return (
@@ -44,17 +48,28 @@ export const BooksList = () => {
       }
     });
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredBooks.slice(indexOfFirstItem, indexOfLastItem);
+  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <>
       <div className="flex flex-row w-full align-baseline items-center mb-4  ">
         <SearchBooks onSearch={setSearchQuery} />
         <SortBooks onSortChange={setSortCriteria} sortCriteria={sortCriteria} />
         <ChangeView view={view} onViewChange={setView} />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredBooks.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={handlePageChange}
+        />
         <AddBook />
       </div>
       {view === 'table' ? (
         <Table
-          data={filteredBooks}
+          data={currentItems}
           columns={[
             {
               title: 'Título',
@@ -109,7 +124,7 @@ export const BooksList = () => {
         />
       ) : (
         <div className="grid grid-cols-4 gap-4">
-          {filteredBooks.map((book) => (
+          {currentItems.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}
         </div>
