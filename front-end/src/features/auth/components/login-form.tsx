@@ -27,13 +27,13 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
           <>
             <Input
               type="email"
-              label="Email Address"
+              label="Email"
               error={formState.errors['email']}
               registration={register('email')}
             />
             <Input
               type="password"
-              label="Password"
+              label="Contraseña"
               error={formState.errors['password']}
               registration={register('password')}
             />
@@ -43,7 +43,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
                 type="submit"
                 className="w-full"
               >
-                Log in
+                Logear
               </Button>
             </div>
           </>
@@ -55,7 +55,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             to={`/auth/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
             className="font-medium text-blue-600 hover:text-blue-500"
           >
-            Register
+            Registrar
           </Link>
         </div>
       </div>

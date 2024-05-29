@@ -29,25 +29,25 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
           <>
             <Input
               type="text"
-              label="First Name"
+              label="Nombre"
               error={formState.errors['firstName']}
               registration={register('firstName')}
             />
             <Input
               type="text"
-              label="Last Name"
+              label="Apellido"
               error={formState.errors['lastName']}
               registration={register('lastName')}
             />
             <Input
               type="email"
-              label="Email Address"
+              label="Email"
               error={formState.errors['email']}
               registration={register('email')}
             />
             <Input
               type="password"
-              label="Password"
+              label="Contraseña"
               error={formState.errors['password']}
               registration={register('password')}
             />
@@ -58,7 +58,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
                 type="submit"
                 className="w-full"
               >
-                Register
+                Registrar
               </Button>
             </div>
           </>
@@ -70,7 +70,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
             to={`/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
             className="font-medium text-blue-600 hover:text-blue-500"
           >
-            Log In
+            Logear
           </Link>
         </div>
       </div>

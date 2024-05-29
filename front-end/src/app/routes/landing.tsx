@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
-import logo from '@/assets/logo.svg';
 import { Head } from '@/components/seo';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/lib/auth';
@@ -28,7 +27,6 @@ export const LandingRoute = () => {
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             <span className="block">Library App</span>
           </h2>
-          {/* <img src={logo} alt="react" /> */}
           <BookOpen className="h-auto w-2/3 mx-auto my-10" />
           <p>Administra el inventario de tu libreria</p>
           <div className="mt-8 flex justify-center">

@@ -9,7 +9,7 @@ export const RegisterRoute = () => {
   const redirectTo = searchParams.get('redirectTo');
 
   return (
-    <Layout title="Register your account">
+    <Layout title="Registra tu cuenta">
       <RegisterForm
         onSuccess={() =>
           navigate(`${redirectTo ? `${redirectTo}` : '/app'}`, {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import logo from '@/assets/logo.svg';
+import { BookOpen } from 'lucide-react';
 import { Head } from '@/components/seo';
 import { Link } from '@/components/ui/link';
 
@@ -16,8 +16,8 @@ export const Layout = ({ children, title }: LayoutProps) => {
       <div className="flex min-h-screen flex-col justify-center bg-gray-50 py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="flex justify-center">
-            <Link className="flex items-center text-white" to="/">
-              <img className="h-24 w-auto" src={logo} alt="Workflow" />
+            <Link className="flex items-center " to="/">
+              <BookOpen className=" text-black h-[200px] w-[200px] my-10" />
             </Link>
           </div>
 

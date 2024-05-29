@@ -9,7 +9,7 @@ export const LoginRoute = () => {
   const redirectTo = searchParams.get('redirectTo');
 
   return (
-    <Layout title="Log in to your account">
+    <Layout title="Entra en tu cuenta">
       <LoginForm
         onSuccess={() =>
           navigate(`${redirectTo ? `${redirectTo}` : '/app'}`, {
