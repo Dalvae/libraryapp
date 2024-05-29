@@ -54,7 +54,11 @@ export const LandingRoute = () => {
               </Button>
             </div>
             <div className="ml-3 inline-flex">
-              <a href="" target="_blank" rel="noreferrer">
+              <a
+                href="https://github.com/Dalvae/libraryapp"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Button
                   variant="outline"
                   icon={
