@@ -1,23 +1,47 @@
-import { ChangeEvent, FC } from 'react';
+import { FC } from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowUp01, ArrowDownWideNarrow } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@radix-ui/react-tooltip';
 
 type SortBooksProps = {
   onSortChange: (criteria: 'id' | 'lastEdited') => void;
+  sortCriteria: 'id' | 'lastEdited';
 };
 
-export const SortBooks: FC<SortBooksProps> = ({ onSortChange }) => {
-  const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    onSortChange(e.target.value as 'id' | 'lastEdited');
+export const SortBooks: FC<SortBooksProps> = ({
+  onSortChange,
+  sortCriteria,
+}) => {
+  const handleSortChange = () => {
+    onSortChange(sortCriteria === 'id' ? 'lastEdited' : 'id');
   };
 
   return (
-    <div className="mb-4">
-      <select
-        onChange={handleSortChange}
-        className="p-2 border border-gray-300 rounded"
-      >
-        <option value="id">Ordenar por ID</option>
-        <option value="lastEdited">Ordenar por Última Edición</option>
-      </select>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            onClick={handleSortChange}
+            className="ml-4 p-2 border border-gray-300 rounded flex items-center justify-center"
+          >
+            {sortCriteria === 'id' ? (
+              <ArrowUp01 className="w-4 h-4" />
+            ) : (
+              <ArrowDownWideNarrow className="w-4 h-4" />
+            )}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent className="bg-white text-sm text-gray-700 p-2 rounded shadow">
+          {sortCriteria === 'id'
+            ? 'Ordenar por ID'
+            : 'Ordenar por última edición'}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
